@@ -36,8 +36,14 @@ it('should work', () => {
   const sMap = s.generateMap({ hires: true, includeContent: true })
   const ssMap = ss.generateMap({ hires: true, includeContent: true })
 
-  expect(removeEmptyKeys(sMap))
-    .toEqual(removeEmptyKeys(ssMap))
+  expect(sMap)
+    .toEqual(ssMap)
+
+  const sDMap = s.generateDecodedMap({ hires: true, includeContent: true })
+  const ssDMap = ss.generateDecodedMap({ hires: true, includeContent: true })
+
+  expect(removeEmptyKeys(sDMap))
+    .toEqual(removeEmptyKeys(ssDMap))
 })
 
 it('replace after replace', () => {
@@ -56,10 +62,8 @@ it('replace after replace', () => {
     .toMatchInlineSnapshot(`
       SourceMap {
         "file": undefined,
-        "ignoreList": [],
         "mappings": "AAAA,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,EAAE,CAAC,CAAC,CAAC,CAAC,EAAE,CAAC,CAAC,CAAC,CAAC,CAAC,EAAE,CAAC,CAAC,CAAC,CAAC,EAAE,CAAC,CAAC,CAAC,CAAC",
         "names": [],
-        "sourceRoot": undefined,
         "sources": [
           "",
         ],

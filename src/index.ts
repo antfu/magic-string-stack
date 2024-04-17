@@ -1,11 +1,13 @@
 /* eslint-disable ts/no-unsafe-declaration-merging */
-import type { DecodedSourceMap, MagicStringOptions, SourceMap, SourceMapOptions } from 'magic-string'
-import MagicString from 'magic-string'
+import type { DecodedSourceMap, MagicStringOptions, SourceMapOptions } from 'magic-string'
+import MagicString, { SourceMap } from 'magic-string'
 import remapping from '@ampproject/remapping'
 
 // Thanks to @sxzz & @starknt for the solution
-export default interface MagicStringStack extends MagicString {}
-export default class MagicStringStack implements MagicString {
+interface MagicStringStackType extends MagicString {}
+
+export default interface MagicStringStack extends MagicStringStackType {}
+export default class MagicStringStack implements MagicStringStackType {
   /**
    * The stack of MagicString instances.
    * Lastest instance is pushed to the front of the array.
@@ -80,31 +82,34 @@ export default class MagicStringStack implements MagicString {
     return this._current.toString()
   }
 
-  clone() {
+  clone(): this {
     const s = new MagicStringStack(this._current.toString(), this._options)
     s._stack = this._stack.map(s => s.clone())
     s._current = s._stack[0]
-    return s
+    return s as any
   }
 
   /**
    * Generates a version 3 sourcemap.
    */
   generateMap(options?: SourceMapOptions): SourceMap {
-    if (this._stack.length === 1)
-      return this._current.generateMap(options)
-    const SOURCE_PLACEHOLDER = '__magic_string_placeholder__.js'
-    const maps = this._stack.map(s => s.generateMap({ source: SOURCE_PLACEHOLDER, ...options }))
-    const merged = remapping(maps as any, () => null) as any
-    merged.sources = merged.sources.map((source: string) => source === SOURCE_PLACEHOLDER ? '' : source)
-    return merged
+    return new SourceMap(this.generateDecodedMap(options))
   }
 
   /**
    * Generates a sourcemap object with raw mappings in array form, rather than encoded as a string.
    * Useful if you need to manipulate the sourcemap further, but most of the time you will use `generateMap` instead.
    */
-  generateDecodedMap(_options?: SourceMapOptions): DecodedSourceMap {
-    throw new Error('generateDecodedMap is not implemented yet. Help us out by contributing to the project if you use this method.')
+  generateDecodedMap(options?: SourceMapOptions): DecodedSourceMap {
+    if (this._stack.length === 1)
+      return this._current.generateDecodedMap(options)
+    const SOURCE_PLACEHOLDER = '__magic_string_placeholder__.js'
+    const maps = this._stack.map(s => s.generateDecodedMap({ source: SOURCE_PLACEHOLDER, ...options }))
+    const merged = remapping(maps as any, () => null, { decodedMappings: true }) as any
+    merged.sources = merged.sources.map((source: string) => source === SOURCE_PLACEHOLDER ? '' : source)
+    delete merged.version
+    return {
+      ...merged,
+    }
   }
 }
