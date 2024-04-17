@@ -25,19 +25,28 @@ export default class MagicStringStack implements MagicString {
     this._stack.unshift(this._current)
 
     // We proxy every function to `this._current` so we can swap it out
-    return new Proxy(new MagicString(''), {
+    const proxy = new Proxy(new MagicString(''), {
       get: (_, p, receiver) => {
         if (Reflect.has(this, p))
           return Reflect.get(this, p, receiver)
-        let parent = Reflect.get(this._current, p, receiver)
-        if (typeof parent === 'function')
-          parent = parent.bind(this._current)
+        const parent = Reflect.get(this._current, p, receiver)
+        if (typeof parent === 'function') {
+          return (...args: any) => {
+            const result = parent.apply(this._current, args)
+            // If the function returns the current instance (chainable), we return the proxy instead
+            if (result === this._current)
+              return proxy
+            return result
+          }
+        }
         return parent
       },
       set: (_, p, value) => {
         return Reflect.set(this, p, value, this)
       },
     }) as any
+
+    return proxy
   }
 
   /**

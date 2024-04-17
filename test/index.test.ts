@@ -88,6 +88,12 @@ it('should support clone', () => {
   expect(s2.toString()).toBe('goodbye there')
 })
 
+it('chainable should return the proxied version', () => {
+  const s = new MagicStringStack('hello world')
+  const s2 = s.update(0, 5, 'goodbye')
+  expect(s2).toBe(s)
+})
+
 function removeEmptyKeys(obj: any) {
   return Object.fromEntries(Object.entries(obj).filter(([_, v]) => !(v == null || (Array.isArray(v) && !v.length))))
 }
