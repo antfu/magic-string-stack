@@ -49,6 +49,7 @@ export default class MagicStringStack implements MagicString {
     const newOne = new MagicString(this._current.toString(), this._options)
     this._current = newOne
     this._stack.unshift(newOne)
+    return this
   }
 
   /**
@@ -59,6 +60,7 @@ export default class MagicStringStack implements MagicString {
       throw new Error('Cannot rollback on the first commit')
     this._stack.shift()
     this._current = this._stack[0]
+    return this
   }
 
   get original() {
