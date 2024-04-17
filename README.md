@@ -34,7 +34,7 @@ import MagicStringStack from 'magic-string-stack'
 const s = new MagicStringStack('problems = 99')
 
 s.replace('problems', 'issues')
-  .append('var ')
+  .prepend('var ')
 
 s.toString() // 'var issues = 99'
 s.original // 'problems = 99' (original string)
