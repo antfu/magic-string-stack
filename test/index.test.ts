@@ -23,6 +23,8 @@ it('should work', () => {
   expect(ss.toString()).toMatchInlineSnapshot(`"answer = 42"`)
 
   ss.commit()
+  ss.commit() // empty commit
+  ss.commit() // empty commit
 
   s.prepend('var ').append(';')
   ss.prepend('var ').append(';')
@@ -69,9 +71,21 @@ it('replace after replace', () => {
     `)
 })
 
-it('should be sub instance', () => {
+it('should be sub instance of MagicString', () => {
   const s = new MagicStringStack('')
   expect(s instanceof MagicString).toBe(true)
+})
+
+it('should support clone', () => {
+  const s = new MagicStringStack('hello world')
+  s.update(0, 5, 'goodbye')
+  s.commit()
+  const s2 = s.clone()
+  expect(s.generateMap()).toEqual(s2.generateMap())
+  s2.update(8, 13, 'there')
+  s2.commit()
+  expect(s.toString()).toBe('goodbye world')
+  expect(s2.toString()).toBe('goodbye there')
 })
 
 function removeEmptyKeys(obj: any) {

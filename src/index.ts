@@ -1,13 +1,20 @@
+/* eslint-disable ts/no-unsafe-declaration-merging */
 import type { DecodedSourceMap, MagicStringOptions, SourceMap, SourceMapOptions } from 'magic-string'
 import MagicString from 'magic-string'
 import remapping from '@ampproject/remapping'
 
 // Thanks to @sxzz & @starknt for the solution
-// eslint-disable-next-line ts/no-unsafe-declaration-merging
 export default interface MagicStringStack extends MagicString {}
-// eslint-disable-next-line ts/no-unsafe-declaration-merging
 export default class MagicStringStack implements MagicString {
+  /**
+   * The stack of MagicString instances.
+   * Lastest instance is pushed to the front of the array.
+   */
   private _stack: MagicString[] = []
+  /**
+   * Prepresents the current MagicString instance.
+   * It should be in the this._stack[0]
+   */
   private _current: MagicString
 
   constructor(
@@ -42,6 +49,16 @@ export default class MagicStringStack implements MagicString {
     const newOne = new MagicString(this._current.toString(), this._options)
     this._current = newOne
     this._stack.unshift(newOne)
+  }
+
+  /**
+   * Rollback to the previous commit.
+   */
+  rollback() {
+    if (this._stack.length <= 1)
+      throw new Error('Cannot rollback on the first commit')
+    this._stack.shift()
+    this._current = this._stack[0]
   }
 
   get original() {
