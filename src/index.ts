@@ -94,6 +94,6 @@ export default class MagicStringStack implements MagicString {
    * Useful if you need to manipulate the sourcemap further, but most of the time you will use `generateMap` instead.
    */
   generateDecodedMap(_options?: SourceMapOptions): DecodedSourceMap {
-    throw new Error('Method not implemented.')
+    throw new Error('generateDecodedMap is not implemented yet. Help us out by contributing to the project if you use this method.')
   }
 }
