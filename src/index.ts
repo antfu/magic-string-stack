@@ -80,6 +80,8 @@ export default class MagicStringStack implements MagicString {
    * Generates a version 3 sourcemap.
    */
   generateMap(options?: SourceMapOptions): SourceMap {
+    if (this._stack.length === 1)
+      return this._current.generateMap(options)
     const SOURCE_PLACEHOLDER = '__magic_string_placeholder__.js'
     const maps = this._stack.map(s => s.generateMap({ source: SOURCE_PLACEHOLDER, ...options }))
     const merged = remapping(maps as any, () => null) as any

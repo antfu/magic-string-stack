@@ -6,9 +6,27 @@
 [![JSDocs][jsdocs-src]][jsdocs-href]
 [![License][license-src]][license-href]
 
-`magic-string` with the capability of committing changes.
+[`magic-string`](https://github.com/rich-harris/magic-string) with the capability of committing changes.
 
-## Usages
+One of the great features of MagicString is that it always relates to the original string positions. However, in some cases, you want to make changes on top of the previously changed string. Usually, you will need to create a new `MagicString` instance and apply the changes again, which then will end up with multiple sourcemaps that you also need to combine manually. This package makes it magically work on a single instance and generate a single auto-combined sourcemap.
+
+This package extends `MagicString` class by adding two methods `.commit()` and `.rollback()`. Under the hood, it also proxies all the operations methods.
+
+## Usage
+
+### `.commit()`
+
+Commit all the changes made so far to MagicString. `s.original` will become the current transformed result. And the positions will now be based on the new string. Under the hood, it creates a new `MagicString` instance and swaps all the methods to the new instance.
+
+### `.rollback()`
+
+Rollback to the state before the last commit. It throws an error if there is no previous commit.
+
+### `.generateMap()`
+
+Supercharge the original `generateMap` method. Where there are multiple commits, it will generate a combined sourcemap using [`@ampproject/remapping`](https://github.com/ampproject/remapping).
+
+### Example
 
 ```ts
 import MagicStringStack from 'magic-string-stack'
