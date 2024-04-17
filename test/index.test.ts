@@ -94,6 +94,19 @@ it('chainable should return the proxied version', () => {
   expect(s2).toBe(s)
 })
 
+it('should be chainable', () => {
+  const s = new MagicStringStack('hello world')
+  s
+    .update(0, 5, 'goodbye')
+    .commit()
+    .update(8, 13, 'there')
+    .commit()
+
+  expect(s.toString()).toBe('goodbye there')
+  expect(s.generateMap({ hires: 'boundary' }).mappings)
+    .toMatchInlineSnapshot(`"AAAA,OAAK,CAAC"`)
+})
+
 function removeEmptyKeys(obj: any) {
   return Object.fromEntries(Object.entries(obj).filter(([_, v]) => !(v == null || (Array.isArray(v) && !v.length))))
 }

@@ -52,7 +52,7 @@
   },
   "dependencies": {
     "@ampproject/remapping": "^2.3.0",
-    "magic-string": "^0.30.9"
+    "magic-string": "^0.30.10"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.14.0",
