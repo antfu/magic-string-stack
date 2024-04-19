@@ -45,7 +45,7 @@ s.original // 'var issues = 99' (applied with previous changes)
 s.replace('issues', 'problems')
 s.toString() // 'var problems = 99'
 
-s.generateMap() // generate sourcemap, if multiple commits happend, it will generate a combined sourcemap
+s.generateMap() // generate sourcemap, if multiple commits happened, it will generate a combined sourcemap
 ```
 
 ## Sponsors
