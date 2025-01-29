@@ -111,6 +111,17 @@ it('should be chainable', () => {
     .toMatchInlineSnapshot(`"AAAA,OAAK,CAAC"`)
 })
 
+it('should support offset modification', () => {
+  const s = new MagicStringStack(' problems = 99')
+  s.offset = 1
+  s.update(0, 8, 'answer')
+  expect(s.toString()).toMatchInlineSnapshot(`" answer = 99"`)
+
+  s.commit()
+  s.update(0, 6, 'problems')
+  expect(s.toString()).toMatchInlineSnapshot(`" problems = 99"`)
+})
+
 function removeEmptyKeys(obj: any) {
   return Object.fromEntries(Object.entries(obj).filter(([_, v]) => !(v == null || (Array.isArray(v) && !v.length))))
 }
