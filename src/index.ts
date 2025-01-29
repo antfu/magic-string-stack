@@ -44,7 +44,10 @@ export default class MagicStringStack implements MagicStringStackType {
         return parent
       },
       set: (_, p, value) => {
-        return Reflect.set(this, p, value, this)
+        if (Reflect.has(this, p))
+          return Reflect.set(this, p, value, this)
+
+        return Reflect.set(this._current, p, value)
       },
     }) as any
 
@@ -58,6 +61,7 @@ export default class MagicStringStack implements MagicStringStackType {
    */
   commit() {
     const newOne = new MagicString(this._current.toString(), this._options)
+    newOne.offset = this._current.offset
     this._current = newOne
     this._stack.unshift(newOne)
     return this
