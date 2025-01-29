@@ -1,7 +1,7 @@
 /* eslint-disable ts/no-unsafe-declaration-merging */
 import type { DecodedSourceMap, MagicStringOptions, SourceMapOptions } from 'magic-string'
-import MagicString, { SourceMap } from 'magic-string'
 import remapping from '@ampproject/remapping'
+import MagicString, { SourceMap } from 'magic-string'
 
 // Thanks to @sxzz & @starknt for the solution
 interface MagicStringStackType extends MagicString {}

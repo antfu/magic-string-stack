@@ -1,5 +1,5 @@
-import { expect, it } from 'vitest'
 import MagicString from 'magic-string'
+import { expect, it } from 'vitest'
 import MagicStringStack from '../src'
 
 it('should work', () => {
