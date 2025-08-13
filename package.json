@@ -42,7 +42,7 @@
     "prepare": "simple-git-hooks"
   },
   "dependencies": {
-    "@ampproject/remapping": "^2.3.0",
+    "@jridgewell/remapping": "^2.3.0",
     "magic-string": "^0.30.17"
   },
   "devDependencies": {
