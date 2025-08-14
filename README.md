@@ -24,7 +24,7 @@ Rollback to the state before the last commit. It throws an error if there is no 
 
 ### `.generateMap()`
 
-Supercharge the original `generateMap` method. Where there are multiple commits, it will generate a combined sourcemap using [`@ampproject/remapping`](https://github.com/ampproject/remapping).
+Supercharge the original `generateMap` method. Where there are multiple commits, it will generate a combined sourcemap using [`@jridgewell/remapping`](https://github.com/jridgewell/remapping).
 
 ### Example
 
