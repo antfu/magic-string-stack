@@ -2,7 +2,7 @@
   "name": "magic-string-stack",
   "type": "module",
   "version": "1.0.0",
-  "packageManager": "pnpm@9.15.4",
+  "packageManager": "pnpm@10.14.0",
   "description": "magic-string with the capability of committing changes",
   "author": "Anthony Fu <anthonyfu117@hotmail.com>",
   "license": "MIT",
@@ -42,25 +42,25 @@
     "prepare": "simple-git-hooks"
   },
   "dependencies": {
-    "@jridgewell/remapping": "^2.3.0",
+    "@jridgewell/remapping": "^2.3.5",
     "magic-string": "^0.30.17"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^4.1.0",
-    "@antfu/ni": "^23.3.0",
-    "@antfu/utils": "^8.1.0",
-    "@types/node": "^22.12.0",
-    "bumpp": "^10.0.1",
-    "eslint": "^9.19.0",
+    "@antfu/eslint-config": "^5.2.1",
+    "@antfu/ni": "^25.0.0",
+    "@antfu/utils": "^9.2.0",
+    "@types/node": "^24.2.1",
+    "bumpp": "^10.2.3",
+    "eslint": "^9.33.0",
     "esno": "^4.8.0",
-    "lint-staged": "^15.4.3",
-    "pnpm": "^9.15.4",
+    "lint-staged": "^16.1.5",
+    "pnpm": "^10.14.0",
     "rimraf": "^6.0.1",
-    "simple-git-hooks": "^2.11.1",
-    "typescript": "^5.7.3",
-    "unbuild": "^3.3.1",
-    "vite": "^6.0.11",
-    "vitest": "^3.0.4"
+    "simple-git-hooks": "^2.13.1",
+    "typescript": "^5.9.2",
+    "unbuild": "^3.6.0",
+    "vite": "^7.1.2",
+    "vitest": "^3.2.4"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"
