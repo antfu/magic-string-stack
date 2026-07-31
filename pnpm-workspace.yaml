@@ -1,8 +1,19 @@
+minimumReleaseAgeExclude:
+  - vite@8.2.0
+
+shellEmulator: true
+
+trustPolicy: no-downgrade
+
 packages:
   - playground
   - docs
   - packages/*
   - examples/*
+
+allowBuilds:
+  esbuild: true
+  simple-git-hooks: true
 
 onlyBuiltDependencies:
   - esbuild
